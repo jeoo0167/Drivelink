@@ -3,9 +3,10 @@
 #include <TaskManager.h>
 #include <Hardware/Sounds.h>
 #include <Data_processing/AIMP.h>
-
+#include <Services/DataManager.h>
 IMU imu;
 TaskManager taskManager;
+FileManager f_manager;
 
 Sounds sounds(taskManager);
 PositionModel positionModel(imu);
@@ -14,7 +15,11 @@ void setup()
 {
   Serial.begin(115200);
   imu.begin();
+  sounds.begin();
   
+  if(!f_manager.begin()) while (true);
+  
+
   taskManager.addThreadTask("IMU Update", []()
   {
     imu.update();
@@ -26,10 +31,11 @@ void setup()
     positionModel.showClases();
   }, 100, 2048, 1);
 
+  sounds.playSound(1);
+
+
   
   taskManager.startThreadTask();
-  sounds.begin();
-  sounds.playSound(1);
 }
 
 void loop()
