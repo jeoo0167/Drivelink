@@ -21,17 +21,7 @@ struct Data
     String ssid;
     String password;
     bool notification;
-    const char* Mac;
-};
-
-class JsonManager 
-{
-    public:
-        void begin();
-        const Data& getData() const { return data; }
-    private:
-    Data data;
-    JsonDocument doc;
+    String Mac;
 };
 
 class FileManager
@@ -51,6 +41,21 @@ class FileManager
         File_info f_inf;
         template<typename Operation>
         bool operate(FileID id, const char*mode,Operation op);
+};
+
+class JsonManager 
+{
+    public:
+        const Data& getData() const { return data; }
+        Data& getData() { return data; }
+        bool setMainData(FileID id);
+        bool load(FileID id);
+    private:
+    Data data;
+    JsonDocument doc;
+    FileManager file_manager;
+
+    bool loadMainSettings();
 };
 
 #endif

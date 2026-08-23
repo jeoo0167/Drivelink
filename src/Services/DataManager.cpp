@@ -45,7 +45,7 @@ bool FileManager::read(FileID file_id, String& data)
 
 bool FileManager::write(FileID file_id, String& data)
 {
-    return operate(file_id,"w",[&](File& file)
+    return operate(file_id,"a",[&](File& file)
     {
         return file.print(data) == data.length();
     });
@@ -53,8 +53,56 @@ bool FileManager::write(FileID file_id, String& data)
 
 bool FileManager::rewrite(FileID file_id, String& data)
 {
-    return operate(file_id,"a",[&](File& file)
+    return operate(file_id,"w",[&](File& file)
     {
         return file.print(data) == data.length();
     });  
+}
+
+bool JsonManager::load(FileID id)
+{
+    String json; 
+    if(!file_manager.read(id,json)) return false;
+    DeserializationError error = deserializeJson(doc,json);
+    if(error)
+    {
+        Serial.println(error.c_str());
+        return false;
+    }
+
+    if(!loadMainSettings())
+    {
+        Serial.println("error loading main settings");
+        return false;
+    }
+    return true;
+}
+
+bool JsonManager::loadMainSettings()
+{
+    if(doc["network"]["ssid"].isNull() || doc["network"]["password"].isNull() || 
+    doc["Sounds"]["notification"].isNull() || doc["network"]["Mac"].isNull())
+    {
+        Serial.println("Json:data error");
+        return false;
+    }
+
+    data.ssid = doc["network"]["ssid"].as<String>();
+    data.password = doc["network"]["password"].as<String>();
+    data.notification = doc["Sounds"]["notification"];
+    data.Mac = doc["network"]["Mac"].as<String>();
+    
+    return true;
+}
+
+bool JsonManager::setMainData(FileID id)
+{
+    doc["network"]["ssid"] = data.ssid;
+    doc["network"]["password"] = data.password;
+    doc["network"]["Mac"] = data.Mac;
+    doc["network"]["notification"] = data.notification;
+
+    String json;
+    serializeJson(doc,json);
+    return file_manager.rewrite(id,json);
 }

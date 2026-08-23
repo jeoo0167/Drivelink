@@ -4,9 +4,11 @@
 #include <Hardware/Sounds.h>
 #include <Data_processing/AIMP.h>
 #include <Services/DataManager.h>
+
 IMU imu;
 TaskManager taskManager;
 FileManager f_manager;
+JsonManager json_manager;
 
 Sounds sounds(taskManager);
 PositionModel positionModel(imu);
@@ -17,9 +19,14 @@ void setup()
   imu.begin();
   sounds.begin();
   
-  if(!f_manager.begin()) while (true);
-  
-
+  if(!f_manager.begin() || !json_manager.load(FileID::Settings))
+  { 
+    while (true);
+  }
+  else
+  {
+    Serial.println("FileManager and file load success");
+  }
   taskManager.addThreadTask("IMU Update", []()
   {
     imu.update();
@@ -34,7 +41,6 @@ void setup()
   sounds.playSound(1);
 
 
-  
   taskManager.startThreadTask();
 }
 
