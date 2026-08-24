@@ -4,12 +4,12 @@
 #include <Hardware/Sounds.h>
 #include <Data_processing/AIMP.h>
 #include <Services/DataManager.h>
-
+#include <Services/Logger.h>
 IMU imu;
 TaskManager taskManager;
 FileManager f_manager;
 JsonManager json_manager;
-
+Logger logger(__FILE__);
 Sounds sounds(taskManager);
 PositionModel positionModel(imu);
 
@@ -21,11 +21,13 @@ void setup()
   
   if(!f_manager.begin() || !json_manager.load(FileID::Settings))
   { 
-    while (true);
+    logger.msg(MsgType::CRITICAL,"FileManager WRONG \n ABORTING");
+    while(true);
   }
   else
   {
-    Serial.println("FileManager and file load success");
+    //Serial.println("FileManager and file load success");
+    logger.msg(MsgType::INFO,"FileManager Success");
   }
   taskManager.addThreadTask("IMU Update", []()
   {

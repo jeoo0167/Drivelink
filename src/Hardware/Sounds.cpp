@@ -2,7 +2,7 @@
 #include "Sounds.h"
 
 Sounds::Sounds(TaskManager& task_manager)
-    : task_manager(task_manager)
+    : task_manager(task_manager), logger(__FILE__)
 {
 }
 void Sounds::begin()
@@ -10,7 +10,7 @@ void Sounds::begin()
     pinMode(buzzerPin, OUTPUT);
     ledcSetup(channel, baseFrequency, resolution);
     ledcAttachPin(buzzerPin, channel);
-    Serial.println("Sounds initialized");
+    logger.msg(MsgType::INFO,"SOUNDS SUCCESS INITED");
 }
 
 
@@ -22,7 +22,7 @@ void Sounds::playSound(int soundIndex)
             task_manager.addTimerTask("Sound1", [this]() {sound1(); }, 25);
             break;
         default:
-            Serial.println("Invalid sound index");
+            logger.msg(MsgType::WARN,"Invalid Sound index");
             break;
     }
 }

@@ -1,5 +1,8 @@
 #include "IMU.h"
+IMU::IMU() : logger(__FILE__)
+{
 
+}
 void IMU::begin()
 {
     Wire.begin();
@@ -8,11 +11,11 @@ void IMU::begin()
 
     if(mpu.testConnection())
     {
-        Serial.println("MPU SUCCESS");
+        logger.msg(MsgType::INFO,"MPU SUCCES INITED");
     }
     else 
     {
-        Serial.print("MPU WRONG");
+        logger.msg(MsgType::CRITICAL,"MPU WRONG INIT \n ABORTING . . .");
         while (true);
     }
 
@@ -25,12 +28,12 @@ void IMU::begin()
 
         packetSize = mpu.dmpGetFIFOPacketSize();
 
-        Serial.println("DMP Success");
+        logger.msg(MsgType::INFO, "DMP SUCCESS INITED");
     }
     else
     {
-        Serial.print("DMP Wrong: ");
-        Serial.println(devStatus);
+        logger.msg(MsgType::ERROR, "DMP WRONG INITED");
+        logger.msg(MsgType::ERROR,devStatus);
     }
 }
 

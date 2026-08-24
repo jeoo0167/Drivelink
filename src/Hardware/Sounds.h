@@ -1,8 +1,8 @@
 #ifndef Sounds_H
 #define Sounds_H
 
-
 #include <Arduino.h>
+#include <Services/Logger.h>
 
 class TaskManager;
 
@@ -18,12 +18,12 @@ class Sounds
 
     private:
         TaskManager& task_manager;
+        Logger logger;
         int buzzerPin = 17;
         int channel = 1;
         int resolution = 8;
         int baseFrequency = 2000;
         int SoundStep = 0;
-
 };
 
 #endif

@@ -1,0 +1,70 @@
+<mxfile host="Electron">
+  <diagram name="Página-1" id="j5Cl24AnQCI9ZqUWQE_v">
+    <mxGraphModel dx="1005" dy="679" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="KuznTeoY9bXX75eZ_2HA-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;TaskManager" vertex="1">
+          <mxGeometry height="580" width="230" x="210" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="KuznTeoY9bXX75eZ_2HA-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Networking&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="102.61" width="204" x="223" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="KuznTeoY9bXX75eZ_2HA-15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="EspNow&lt;div&gt;Handler&lt;/div&gt;" vertex="1">
+          <mxGeometry height="64.1304347826087" width="62" x="240" y="379.99826086956523" as="geometry" />
+        </mxCell>
+        <mxCell id="KuznTeoY9bXX75eZ_2HA-17" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Websocket&lt;div&gt;Handler&lt;/div&gt;" vertex="1">
+          <mxGeometry height="64.1304347826087" width="74" x="340" y="379.99826086956523" as="geometry" />
+        </mxCell>
+        <mxCell id="KuznTeoY9bXX75eZ_2HA-18" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="90.25999999999999" width="204" x="223" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="KuznTeoY9bXX75eZ_2HA-2" parent="KuznTeoY9bXX75eZ_2HA-18" style="rounded=1;whiteSpace=wrap;html=1;align=center;arcSize=14;" value="&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Hardware&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90.26" width="204" as="geometry" />
+        </mxCell>
+        <mxCell id="KuznTeoY9bXX75eZ_2HA-4" parent="KuznTeoY9bXX75eZ_2HA-18" style="rounded=1;whiteSpace=wrap;html=1;" value="IMU" vertex="1">
+          <mxGeometry height="54.29" width="74" x="24" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="KuznTeoY9bXX75eZ_2HA-6" parent="KuznTeoY9bXX75eZ_2HA-18" style="rounded=1;whiteSpace=wrap;html=1;" value="Buzzer" vertex="1">
+          <mxGeometry height="54.29" width="74" x="114" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="KuznTeoY9bXX75eZ_2HA-19" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="90.25999999999999" width="204" x="228" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="KuznTeoY9bXX75eZ_2HA-7" parent="KuznTeoY9bXX75eZ_2HA-19" style="rounded=1;whiteSpace=wrap;html=1;align=center;arcSize=14;" value="Services&lt;div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90.26" width="204" as="geometry" />
+        </mxCell>
+        <mxCell id="KuznTeoY9bXX75eZ_2HA-8" parent="KuznTeoY9bXX75eZ_2HA-19" style="rounded=1;whiteSpace=wrap;html=1;" value="Json&lt;div&gt;Manager&lt;/div&gt;" vertex="1">
+          <mxGeometry height="54.29" width="74" x="14" y="17.99000000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="KuznTeoY9bXX75eZ_2HA-9" parent="KuznTeoY9bXX75eZ_2HA-19" style="rounded=1;whiteSpace=wrap;html=1;" value="Battery&lt;div&gt;Manager&lt;/div&gt;" vertex="1">
+          <mxGeometry height="54.29" width="74" x="114" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="KuznTeoY9bXX75eZ_2HA-21" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="102.61" width="204" x="223" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="KuznTeoY9bXX75eZ_2HA-11" parent="KuznTeoY9bXX75eZ_2HA-21" style="rounded=1;whiteSpace=wrap;html=1;" value="Data&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="102.61000000000001" width="204" as="geometry" />
+        </mxCell>
+        <mxCell id="KuznTeoY9bXX75eZ_2HA-12" parent="KuznTeoY9bXX75eZ_2HA-21" style="rounded=1;whiteSpace=wrap;html=1;" value="AIMP" vertex="1">
+          <mxGeometry height="61.71833481054731" width="66.56842105263158" x="17.003684210526316" y="25.54450144028353" as="geometry" />
+        </mxCell>
+        <mxCell id="KuznTeoY9bXX75eZ_2HA-13" parent="KuznTeoY9bXX75eZ_2HA-21" style="rounded=1;whiteSpace=wrap;html=1;" value="Supervisor" vertex="1">
+          <mxGeometry height="61.71833481054731" width="66.56842105263158" x="118.10526315789474" y="25.544501440283593" as="geometry" />
+        </mxCell>
+        <mxCell id="KuznTeoY9bXX75eZ_2HA-25" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="90.26" width="204" x="223" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="KuznTeoY9bXX75eZ_2HA-22" parent="KuznTeoY9bXX75eZ_2HA-25" style="rounded=1;whiteSpace=wrap;html=1;" value="App&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90.25999999999999" width="203.99999999999997" as="geometry" />
+        </mxCell>
+        <mxCell id="KuznTeoY9bXX75eZ_2HA-23" parent="KuznTeoY9bXX75eZ_2HA-25" style="rounded=1;whiteSpace=wrap;html=1;" value="Core" vertex="1">
+          <mxGeometry height="22.564999999999998" width="168.41860465116275" x="17.790697674418603" y="56.4125" as="geometry" />
+        </mxCell>
+        <mxCell id="KuznTeoY9bXX75eZ_2HA-24" parent="KuznTeoY9bXX75eZ_2HA-25" style="rounded=1;whiteSpace=wrap;html=1;" value="Main" vertex="1">
+          <mxGeometry height="22.564999999999998" width="168.41860465116275" x="17.790697674418603" y="22.564999999999998" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

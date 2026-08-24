@@ -5,6 +5,8 @@
 #include <Arduino.h>
 #include <ArduinoJson.h>
 #include <array>
+#include <Services/Logger.h>
+
 enum FileID
 {
     Settings,
@@ -27,6 +29,7 @@ struct Data
 class FileManager
 {
     public:
+        FileManager();
         bool begin();
         const char* getPath(FileID file_id);
         bool write(FileID file_id, String& data);
@@ -41,11 +44,13 @@ class FileManager
         File_info f_inf;
         template<typename Operation>
         bool operate(FileID id, const char*mode,Operation op);
+        Logger logger;
 };
 
 class JsonManager 
 {
     public:
+        JsonManager();
         const Data& getData() const { return data; }
         Data& getData() { return data; }
         bool setMainData(FileID id);
@@ -54,7 +59,7 @@ class JsonManager
     Data data;
     JsonDocument doc;
     FileManager file_manager;
-
+    Logger logger;
     bool loadMainSettings();
 };
 

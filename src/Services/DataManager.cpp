@@ -1,13 +1,15 @@
 #include "DataManager.h"
 
+FileManager::FileManager() : logger(__FILE__) {}
+
 bool FileManager::begin()
 {
     if(!LittleFS.begin())
     {
-        Serial.println("LittleFs Wrong");
+        logger.msg(MsgType::CRITICAL,"LITTLEFS SUCCESS INITED");
         return false;
     }
-    Serial.println("LittleFs Success");
+    logger.msg(MsgType::INFO,"LITTLEFS SUCCESS INITED");
     return true;
 }
 
@@ -59,6 +61,9 @@ bool FileManager::rewrite(FileID file_id, String& data)
     });  
 }
 
+
+JsonManager::JsonManager() : logger(__FILE__) {}
+
 bool JsonManager::load(FileID id)
 {
     String json; 
@@ -66,13 +71,13 @@ bool JsonManager::load(FileID id)
     DeserializationError error = deserializeJson(doc,json);
     if(error)
     {
-        Serial.println(error.c_str());
+        logger.msg(MsgType::ERROR,error.c_str());
         return false;
     }
 
     if(!loadMainSettings())
     {
-        Serial.println("error loading main settings");
+        logger.msg(MsgType::ERROR,"falied load main settings");
         return false;
     }
     return true;

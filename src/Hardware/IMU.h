@@ -3,6 +3,7 @@
 
 #include "MPU6050_6Axis_MotionApps20.h"
 #include <Wire.h>
+#include <Services/Logger.h>
 
 struct Data_Raw
 {
@@ -35,6 +36,7 @@ const double IMU_DEG = 180.0 / M_PI;
 class IMU
 {
     public:
+        IMU();
         const IMU_Data& getData() const { return imu_data; }
         void begin();
         void update();
@@ -67,7 +69,7 @@ class IMU
         AngleUnit angleUnit = AngleUnit::DEGREES;
 
         IMU_Data imu_data;
+        Logger logger;      
         
 };
-
 #endif
