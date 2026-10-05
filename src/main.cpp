@@ -5,6 +5,8 @@
 #include <Data_processing/AIMP.h>
 #include <Services/DataManager.h>
 #include <Services/Logger.h>
+#include <Services/Supervisor.h>
+
 IMU imu;
 TaskManager taskManager;
 FileManager f_manager;
@@ -12,10 +14,11 @@ JsonManager json_manager;
 Logger logger(__FILE__);
 Sounds sounds(taskManager);
 PositionModel positionModel(imu);
-
+Supervisor supervisor(positionModel);
 void setup()
 {
-  Serial.begin(115200);
+  logger.init();
+  logger.setOutput(OutMode::both); 
   imu.begin();
   sounds.begin();
   
@@ -29,6 +32,7 @@ void setup()
     //Serial.println("FileManager and file load success");
     logger.msg(MsgType::INFO,"FileManager Success");
   }
+  
   taskManager.addThreadTask("IMU Update", []()
   {
     imu.update();
@@ -37,10 +41,19 @@ void setup()
   taskManager.addThreadTask("Position Prediction", []() 
   {
     positionModel.predictPosition();
-    positionModel.showClases();
+    //positionModel.showClases();
   }, 100, 2048, 1);
 
-  sounds.playSound(1);
+  taskManager.addThreadTask("Supervisor", []()
+  {
+      supervisor.update();
+      if(supervisor.hasChanged())
+      {
+        supervisor.showStatus();
+        supervisor.clearChanged();
+      }
+  }, 20, 2048, 1);
+  //sounds.playSound(1);
 
 
   taskManager.startThreadTask();

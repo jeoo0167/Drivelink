@@ -1,5 +1,7 @@
 #include "TaskManager.h"
 
+
+//falta una funcion para remover threadtasks
 void TaskManager::addThreadTask(const char* name, std::function<void()> callback, uint32_t period, uint32_t stacksize, UBaseType_t priority)
 {
     if (ThreadTaskCount >= MAX_TASKS)
