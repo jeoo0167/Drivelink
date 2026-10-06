@@ -15,6 +15,7 @@ class Sounds
         void stopSound();
         void changeParameters(int newBaseFrequency, int newResolution, int newChannel);
         void sound1();
+        void beep(uint16_t duration = 500);
 
     private:
         TaskManager& task_manager;

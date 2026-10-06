@@ -5,9 +5,12 @@
 #include <functional>
 #include <Arduino.h>
 #include <freertos/FreeRTOS.h>
+#include <freertos/queue.h>
 
 #define MAX_TASKS 10
 #define MAX_TIMER_TASKS 10
+#define NETWORK_RX_QUEUE_SIZE 10
+
 struct ThreadTaskinfo
 {
     const char* name;

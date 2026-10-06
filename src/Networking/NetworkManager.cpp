@@ -2,11 +2,9 @@
 
 NetworkManager* NetworkManager::_instance = nullptr;
 
-NetworkManager::NetworkManager()
+NetworkManager::NetworkManager() : logger(__FILE__)
 {
     memset(_peerAddress, 0, sizeof(_peerAddress));
-
-    _packetAvailable = false;
 
     _sequence = 0;
 
@@ -44,6 +42,15 @@ bool NetworkManager::begin(const uint8_t* peerAddress)
     // --------------------------------
     // Registrar callbacks
     // --------------------------------
+
+    rxQueue = xQueueCreate(NETWORK_MAX_QUEUE_SIZE,sizeof(NetworkPacket));
+
+
+    if(rxQueue == nullptr)
+    {
+        logger.msg(MsgType::CRITICAL, "falied to create rx queue");
+        return false;
+    }
 
     esp_now_register_send_cb(onDataSent);
 
@@ -109,31 +116,21 @@ bool NetworkManager::send(
 
 bool NetworkManager::available()
 {
-    return _packetAvailable;
+    if (rxQueue == nullptr)
+        return false;
+
+    return uxQueueMessagesWaiting(rxQueue) > 0;
 }
 
 
 NetworkPacket NetworkManager::receive()
 {
-    NetworkPacket packet = {};
+    NetworkPacket packet{};
 
-    if (!_packetAvailable)
-    {
+    if (rxQueue == nullptr)
         return packet;
-    }
 
-    // Evitar leer mientras el callback modifica
-    noInterrupts();
-
-    memcpy(
-        &packet,
-        &_receivedPacket,
-        sizeof(NetworkPacket)
-    );
-
-    _packetAvailable = false;
-
-    interrupts();
+    xQueueReceive(rxQueue, &packet, 0);
 
     return packet;
 }
@@ -148,57 +145,92 @@ uint32_t NetworkManager::getSequence() const
 void NetworkManager::onDataReceive(
     const uint8_t* mac,
     const uint8_t* data,
-    int len
-)
+    int len)
 {
-    if (_instance == nullptr)
-    {
+    if (mac == nullptr || data == nullptr)
         return;
-    }
 
-    _instance->handleReceive(
-        data,
-        len
-    );
-}
-
-
-void NetworkManager::handleReceive(
-    const uint8_t* data,
-    int len
-)
-{
     if (len != sizeof(NetworkPacket))
-    {
         return;
+
+    NetworkPacket packet{};
+    memcpy(&packet, data, sizeof(NetworkPacket));
+
+    // Garantizar terminación de la cadena.
+    packet.data[sizeof(packet.data) - 1] = '\0';
+
+    if (_instance->rxQueue == nullptr)
+        return;
+
+    // Operación no bloqueante: el callback no espera
+    // a que la aplicación consuma el paquete.
+    if (xQueueSend(_instance->rxQueue, &packet, 0) != pdPASS)
+    {
+        ++_instance->droppedPackets;
     }
-
-    memcpy(
-        &_receivedPacket,
-        data,
-        sizeof(NetworkPacket)
-    );
-
-    _packetAvailable = true;
 }
-
 
 void NetworkManager::onDataSent(
     const uint8_t* mac,
     esp_now_send_status_t status
 )
 {
-    // Por ahora solamente observamos
-    // el resultado mediante Serial.
-
-    Serial.print("ESP-NOW TX: ");
+    if (_instance == nullptr)
+        return;
 
     if (status == ESP_NOW_SEND_SUCCESS)
     {
-        Serial.println("OK");
+        _instance->logger.msg(
+            MsgType::INFO,
+            "ESP-NOW TX: SUCCESS"
+        );
     }
     else
     {
-        Serial.println("FAIL");
+        _instance->logger.msg(
+            MsgType::ERROR,
+            "ESP-NOW TX: FAILED"
+        );
     }
+}
+
+void NetworkManager::sendHeartbeat()
+{
+    NetworkPacket packet = {};
+
+    packet.type = static_cast<uint8_t>(MessageType::HEARTBEAT);
+    packet.sequence = _sequence++;
+
+    snprintf(
+        packet.data,
+        sizeof(packet.data),
+        "HEARTBEAT"
+    );
+
+    if (send(packet))
+    {
+        lastHeartbeat = millis();
+    }
+}
+
+bool NetworkManager::isConnected() const
+{
+    return connected;
+}
+
+void NetworkManager::updateConnection()
+{
+    uint32_t now = millis();
+
+    if (now - lastHeartbeatAck > HEARTBEAT_TIMEOUT)
+    {
+        connected = false;
+    }
+}
+
+void NetworkManager::processHeartbeatAck(
+    const NetworkPacket& packet)
+{
+    lastHeartbeatAck = millis();
+    connected = true;
 }

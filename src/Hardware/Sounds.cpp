@@ -21,6 +21,9 @@ void Sounds::playSound(int soundIndex)
         case 1:
             task_manager.addTimerTask("Sound1", [this]() {sound1(); }, 25);
             break;
+        case 2:
+            beep();
+            break;
         default:
             logger.msg(MsgType::WARN,"Invalid Sound index");
             break;
@@ -38,4 +41,14 @@ void Sounds::sound1()
         ledcWriteTone(channel, 0);
         task_manager.removeTimerTask("Sound1");
     }
+}
+
+void Sounds::beep(uint16_t duration)
+{
+    ledcWriteTone(channel, 2000);
+
+    task_manager.addTimerTask("Beep", [this]() {
+        ledcWriteTone(channel, 0);
+        task_manager.removeTimerTask("Beep");
+    }, duration);
 }

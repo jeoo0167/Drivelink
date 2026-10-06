@@ -6,7 +6,9 @@
 enum class MessageType : uint8_t
 {
     DATA = 0,
-    ACK  = 1
+    ACK  = 1,
+    HEARTBEAT,
+    HEARTBEAT_ACK
 };
 
 struct NetworkPacket
