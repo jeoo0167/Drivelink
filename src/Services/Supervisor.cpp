@@ -163,3 +163,4 @@ void Supervisor::showStatus()
     logger.msg(MsgType::INFO,String(" | Confidence: ") + currentConfidence + 2);
     logger.msg(MsgType::INFO,String(" | Changed: ")+String(changed ? "YES" : "NO"));
 }
+

@@ -1,3 +1,4 @@
+
 #ifndef NETWORK_MANAGER_H
 #define NETWORK_MANAGER_H
 
@@ -6,6 +7,7 @@
 #include <WiFi.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/queue.h>
+
 #include "Packet.h"
 #include "Services/Logger.h"
 
@@ -17,36 +19,27 @@ static constexpr uint32_t HEARTBEAT_TIMEOUT = 1500;
 class NetworkManager
 {
 public:
-
     NetworkManager();
 
     bool begin(const uint8_t* peerAddress);
 
     bool send(const char* message);
-
     bool send(const NetworkPacket& packet);
 
-    bool available();
-
-    NetworkPacket receive();
+    bool available() const;
+    bool receive(NetworkPacket& packet);
 
     uint32_t getSequence() const;
-    
     bool isConnected() const;
 
     void sendHeartbeat();
-
     void updateConnection();
 
     void processHeartbeatAck(const NetworkPacket& packet);
+
 private:
-
-    uint8_t _peerAddress[6];
-
-    volatile bool _packetAvailable;
-    NetworkPacket _receivedPacket;
-
-    uint32_t _sequence;
+    uint8_t _peerAddress[6]{};
+    uint32_t _sequence = 0;
 
     static NetworkManager* _instance;
 
@@ -61,16 +54,12 @@ private:
         esp_now_send_status_t status
     );
 
-    void handleReceive(
-        const uint8_t* data,
-        int len
-    );
-
     Logger logger;
 
     QueueHandle_t rxQueue = nullptr;
+
     uint32_t droppedPackets = 0;
-    
+
     uint32_t lastHeartbeat = 0;
     uint32_t lastHeartbeatAck = 0;
 

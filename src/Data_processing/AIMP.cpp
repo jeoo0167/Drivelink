@@ -37,9 +37,9 @@ void PositionModel::predictPosition()
 
     for(int i = 0 ; i<10; i++ ) {aux=0.0;for(int j = 0 ; j <3 ; j++ ) { aux=aux+W1[i][j]*a0[j];} a1[i]=relu(aux+b1[i]);}
     for(int i = 0 ; i<10; i++ ) {aux=0.0;for(int j = 0 ; j <10 ; j++ ) { aux=aux+W2[i][j]*a1[j];} a2[i]=relu(aux+b2[i]);}
-    float aux1 = 0;
+    double aux1 = 0;
     for(int i = 0 ; i<5; i++ ) {aux=0.0;for(int j = 0 ; j <10 ; j++ ){ aux=aux+W3[i][j]*a2[j];} a3[i]=(aux+b3[i]);aux1=aux1+exp(a3[i]);}
-    float minimo = 0.0;
+    double minimo = 0.0;
     int classes = 0;
     for(int i = 0;  i<5; i++){a3[i] = exp(a3[i])/aux1;if(a3[i]>minimo){minimo=a3[i];classes=i;}}
     

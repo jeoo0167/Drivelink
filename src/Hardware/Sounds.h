@@ -20,7 +20,7 @@ class Sounds
     private:
         TaskManager& task_manager;
         Logger logger;
-        int buzzerPin = 17;
+        int buzzerPin = 14;
         int channel = 1;
         int resolution = 8;
         int baseFrequency = 2000;

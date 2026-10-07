@@ -114,25 +114,22 @@ bool NetworkManager::send(
 }
 
 
-bool NetworkManager::available()
+bool NetworkManager::available() const
+{
+    return rxQueue != nullptr &&
+           uxQueueMessagesWaiting(rxQueue) > 0;
+}
+
+bool NetworkManager::receive(NetworkPacket& packet)
 {
     if (rxQueue == nullptr)
         return false;
 
-    return uxQueueMessagesWaiting(rxQueue) > 0;
-}
-
-
-NetworkPacket NetworkManager::receive()
-{
-    NetworkPacket packet{};
-
-    if (rxQueue == nullptr)
-        return packet;
-
-    xQueueReceive(rxQueue, &packet, 0);
-
-    return packet;
+    return xQueueReceive(
+        rxQueue,
+        &packet,
+        0
+    ) == pdPASS;
 }
 
 
@@ -201,11 +198,13 @@ void NetworkManager::sendHeartbeat()
     packet.type = static_cast<uint8_t>(MessageType::HEARTBEAT);
     packet.sequence = _sequence++;
 
-    snprintf(
+    strncpy(
         packet.data,
-        sizeof(packet.data),
-        "HEARTBEAT"
+        "HEARTBEAT",
+        sizeof(packet.data) - 1
     );
+
+    packet.data[sizeof(packet.data) - 1] = '\0';
 
     if (send(packet))
     {
